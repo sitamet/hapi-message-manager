@@ -17,7 +17,7 @@ This service exposes:
 
 ## Dependencies
 
-`hapi-message-manager` depends on hapi-rascal (the amqp rascal plugin for hapijs).
+`hapi-message-manager` depends on hapi-rascal [https://github.com/sitamet/hapi-rascal](hapi-rascal) (the amqp rascal plugin for hapijs).
 
 
 ## Install
@@ -48,7 +48,6 @@ function processMessage(message, content, ackOrNack) {
     // message digest
 }
 
-
 server.plugins.message.manager.subscribeThisProcessor(processMessage, 'entity-product.tasks');
 ```
 
@@ -69,6 +68,9 @@ switch (routing.keyBare()) {
         
     case 'object-type-b.cmd.update-b':
 
+        // once updateB calls back, routing sets new content if no err 
+        // and reply emits a done with key object-type-b.event.update-b-done or
+        // object-type-b.errir.update-b if the updateB fails
         updateB(content.objectTypeB, (err, objectTypeB) => {
             routing.setContent(err ? null : { objectTypeB }).reply(err);
         });
