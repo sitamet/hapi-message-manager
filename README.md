@@ -7,7 +7,7 @@ A service wrapper for message digest of keys based on the structure 'dom.obj.act
  * act: action: event, error, cmd command.
  * det: action detail.
 
-this service exposes:
+This service exposes:
 
 - `Routing`: a class that helps you to manage a message.
 - `subscribeThisProcessor: a method used to link a message digest to a subscription.
@@ -28,7 +28,7 @@ npm install hapi-message-manager --save
 
 ## Usage
 
-Register this module after hapi-rascal:
+When starting your hapijs server, register this module after hapi-rascal:
 
 ```
 { register: require('hapi-rascal'), options: config.rascal },
@@ -36,7 +36,12 @@ Register this module after hapi-rascal:
 ...
 ```
 
-Subscribe `processMessage` to our named subscription `entity-product.tasks`:
+This message-manager service gets exposed in `server.plugins.message.manager`
+
+
+### How to link a processMessage digest to a subscription:
+
+To subscribe `processMessage` to our named subscription `entity-product.tasks`:
 
 ```javascript
 function processMessage(message, content, ackOrNack) {
@@ -47,8 +52,7 @@ function processMessage(message, content, ackOrNack) {
 server.plugins.message.manager.subscribeThisProcessor(processMessage, 'entity-product.tasks');
 ```
 
-Route a message with the help of `Routing`:
-
+### How to deal with a message with the help of `Routing`:
 
 ```javascript
 let routing = server.plugins.message.manager.Routing(message, content);
@@ -70,8 +74,6 @@ switch (routing.keyBare()) {
         });
         break;
 }
-
-
 ```
 
 
