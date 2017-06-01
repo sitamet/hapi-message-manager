@@ -10,7 +10,7 @@ A service wrapper for message digest of keys based on the structure 'dom.obj.act
 This service exposes:
 
 - `Routing`: a class that helps you to manage a message.
-- `subscribeThisProcessor: a method used to link a message digest to a subscription.
+- `subscribeThisProcessor`: a method used to link a message digest to a subscription.
 
 **IMPORTANT**: this module is in design stage.
 
