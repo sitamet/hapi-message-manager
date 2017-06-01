@@ -1,0 +1,40 @@
+{
+  "name": "hapi-message-manager",
+  "version": "0.1.0",
+  "description": "A service wrapper for message digest of keys based on the structure 'dom.obj.act.det'",
+  "main": "lib/index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sitamet/hapi-message-manager.git"
+  },
+  "keywords": [
+    "Hapi.js",
+    "Hapi",
+    "amqplib",
+    "amqp",
+    "rabbitmq"
+  ],
+  "author": {
+    "name": "@sitamet",
+    "email": "vega.joan@gmail.com"
+  },
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sitamet/hapi-message-manager/issues"
+  },
+  "homepage": "https://github.com/sitamet/hapi-message-manager",
+  "dependencies": {
+    "hapi-rascal": "^1.1.0",
+    "hapi": "^16.3.0"
+  },
+  "devDependencies": {
+    "jasmine": "2.4.1"
+  },
+  "engines": {
+    "node": ">=4.2.3"
+  },
+  "scripts": {
+    "test": "NODE_ENV=test && ./node_modules/jasmine/bin/jasmine.js",
+    "rabbitmq": "docker run -d -p 5672:5672 -p 15672:15672 dockerfile/rabbitmq"
+  }
+}
