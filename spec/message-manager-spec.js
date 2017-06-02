@@ -36,14 +36,12 @@ describe("message-manager", () => {
         done();
     });
 
+    beforeEach(done => {
+        spyOn(broker, 'publish').and.callThrough();
+        done();
+    });
 
     describe('the Routing.reply', () => {
-
-        beforeAll(done => {
-            spyOn(broker, 'publish').and.callThrough();
-            done();
-        });
-
 
         it("give us a standar reply to an error when calling Routing.reply", done => {
 
@@ -100,23 +98,39 @@ describe("message-manager", () => {
         });
     });
 
-    /*
-    it("acks with a forward when calling processRedeliveriesExceeded", done => {
 
-        let amqpMessage = { fields: { routingKey: 'dom.obj.act.det' } };
+    it("publishes a message when calling publish", done => {
 
-        messageManager.processRedeliveriesExceeded('the error', amqpMessage, (err, ackObject) => {
+        messageManager.publish({ foo: 'bar' }, 'dev.foo.event.bar', () => {
 
-            expect(err).toBe('the error');
-            expect(ackObject).toEqual(jasmine.objectContaining({
-                                                                   strategy: 'forward',
-                                                                   publication: 'dom.obj.act.det',
-                                                                   options: { routingKey: 'dom.obj.error.det' }
-                                                               }));
+            expect(broker.publish).toHaveBeenCalled();
+            expect(broker.publish.calls.mostRecent().args[2]).toBe('dev.foo.event.bar');
+            expect(broker.publish.calls.mostRecent().args[1].foo).toBe('bar');
+            expect(broker.publish.calls.mostRecent().args[1].ocurredOn).toBeDefined();
 
             done();
+
         });
+
     });
-    */
+
+    /*
+     it("acks with a forward when calling processRedeliveriesExceeded", done => {
+
+     let amqpMessage = { fields: { routingKey: 'dom.obj.act.det' } };
+
+     messageManager.processRedeliveriesExceeded('the error', amqpMessage, (err, ackObject) => {
+
+     expect(err).toBe('the error');
+     expect(ackObject).toEqual(jasmine.objectContaining({
+     strategy: 'forward',
+     publication: 'dom.obj.act.det',
+     options: { routingKey: 'dom.obj.error.det' }
+     }));
+
+     done();
+     });
+     });
+     */
 
 });

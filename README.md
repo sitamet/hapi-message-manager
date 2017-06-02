@@ -1,10 +1,10 @@
 # Hapi amqp message manager
 
-A service wrapper for message digest of keys based on the structure 'dom.obj.act.det'
+A service wrapper for message management with keys based on the structure 'dom.obj.act.det'
 
- * dom: domain.
- * obj: object message carries.
- * act: action: event, error, cmd command.
+ * dom: domain where the event occurs or the command is targetted
+ * obj: object the message carries.
+ * act: action: [event|error|cmd command].
  * det: action detail.
 
 This service exposes:
@@ -50,6 +50,14 @@ function processMessage(message, content, ackOrNack) {
 
 server.plugins.message.manager.subscribeThisProcessor(processMessage, 'entity-product.tasks');
 ```
+
+### How to publish a message:
+
+```javascript
+server.plugins.message.manager.publish({ 'foo': 'bar' }, 'test-domain.foo.cmd.update-foo');
+```
+
+
 
 ### How to deal with a message with the help of `Routing`:
 
