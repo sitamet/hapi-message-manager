@@ -1,7 +1,7 @@
 {
   "name": "hapi-message-manager",
-  "version": "0.2.0",
-  "description": "A service wrapper for message management with keys based on the structure 'dom.obj.act.det'",
+  "version": "0.3.0",
+  "description": "A hapi-rascal driver for message management with keys based on the structure 'dom.obj.act.det'",
   "main": "lib/index.js",
   "repository": {
     "type": "git",
