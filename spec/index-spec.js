@@ -1,6 +1,6 @@
 'use strict';
 
-let MessageManager = require('../lib/message-manager');
+let MessageManager = require('../lib/index');
 let broker = require('./mocks/fakeBroker');
 
 describe("message-manager", () => {
