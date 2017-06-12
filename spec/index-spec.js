@@ -111,7 +111,6 @@ describe("message-manager", () => {
             done();
 
         });
-
     });
 
     /*
