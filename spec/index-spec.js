@@ -37,80 +37,75 @@ describe("message-manager", () => {
     });
 
     beforeEach(done => {
-        spyOn(broker, 'publish').and.callThrough();
+        spyOn(broker, 'publishAsync').and.callThrough();
         done();
     });
 
     describe('the Routing.reply', () => {
 
-        it("give us a standar reply to an error when calling Routing.reply", done => {
+        it("give us a standar reply to an error when calling Routing.reply", async (done) => {
 
             let amqpMessage = { fields: { routingKey: 'dev.obj.cmd.test-reply' } },
                 content = { obj: 'my object' },
                 routingManager = messageManager.Routing(amqpMessage, content);
 
 
-            routingManager.reply(new Error('the error'), 'result with error', () => {
+            await routingManager.reply(new Error('the error'), 'result with error');
 
-                expect(broker.publish).toHaveBeenCalled();
-                expect(broker.publish.calls.mostRecent().args[2]).toBe('dev.obj.error.test-reply');
-                expect(broker.publish.calls.mostRecent().args[1].error).toBe('the error');
-                expect(broker.publish.calls.mostRecent().args[1].result).toBe('result with error');
+            expect(broker.publishAsync).toHaveBeenCalled();
+            expect(broker.publishAsync.calls.mostRecent().args[2]).toBe('dev.obj.error.test-reply');
+            expect(broker.publishAsync.calls.mostRecent().args[1].error).toBe('the error');
+            expect(broker.publishAsync.calls.mostRecent().args[1].result).toBe('result with error');
 
-                done();
-
-            });
+            done();
         });
 
 
-        it("give us a standar reply to a successful cmd when calling Routing.reply", done => {
+        it("give us a standar reply to a successful cmd when calling Routing.reply", async done => {
 
             let amqpMessage = { fields: { routingKey: 'dev.obj.cmd.test-reply' } },
                 content = { obj: 'my object' },
                 routingManager = messageManager.Routing(amqpMessage, content);
 
-            routingManager.reply(null, 'successful result', () => {
+            await routingManager.reply(null, 'successful result');
 
-                expect(broker.publish).toHaveBeenCalled();
-                expect(broker.publish.calls.mostRecent().args[2]).toBe('dev.obj.event.test-reply-done');
-                expect(broker.publish.calls.mostRecent().args[1].result).toBe('successful result');
+            expect(broker.publishAsync).toHaveBeenCalled();
+            expect(broker.publishAsync.calls.mostRecent().args[2]).toBe('dev.obj.event.test-reply-done');
+            expect(broker.publishAsync.calls.mostRecent().args[1].result).toBe('successful result');
 
-                done();
+            done();
 
-            });
         });
 
 
-        it("give us a standar reply to a successful cmd with new content when calling Routing.setContent", done => {
+        it("give us a standar reply to a successful cmd with new content when calling Routing.setContent", async done => {
 
             let amqpMessage = { fields: { routingKey: 'dev.obj.cmd.test-reply' } },
                 content = { obj: 'original content' },
                 routingManager = messageManager.Routing(amqpMessage, content);
 
-            routingManager.setContent({ obj: 'new content' }).reply(null, null, () => {
+            await routingManager.setContent({ obj: 'new content' }).reply(null, null);
 
-                expect(broker.publish.calls.mostRecent().args[1].result).toBeUndefined();
-                expect(broker.publish.calls.mostRecent().args[1].obj).toBe('new content');
-
-                done();
-
-            });
-        });
-    });
-
-
-    it("publishes a message when calling publish", done => {
-
-        messageManager.publish({ foo: 'bar' }, 'dev.foo.event.bar', () => {
-
-            expect(broker.publish).toHaveBeenCalled();
-            expect(broker.publish.calls.mostRecent().args[2]).toBe('dev.foo.event.bar');
-            expect(broker.publish.calls.mostRecent().args[1].foo).toBe('bar');
-            expect(broker.publish.calls.mostRecent().args[1].ocurredOn).toBeDefined();
+            expect(broker.publishAsync.calls.mostRecent().args[1].result).toBeUndefined();
+            expect(broker.publishAsync.calls.mostRecent().args[1].obj).toBe('new content');
 
             done();
 
         });
+    });
+
+
+    it("publishes a message when calling publish", async done => {
+
+        await messageManager.publish({ foo: 'bar' }, 'dev.foo.event.bar');
+
+        expect(broker.publishAsync).toHaveBeenCalled();
+        expect(broker.publishAsync.calls.mostRecent().args[2]).toBe('dev.foo.event.bar');
+        expect(broker.publishAsync.calls.mostRecent().args[1].foo).toBe('bar');
+        expect(broker.publishAsync.calls.mostRecent().args[1].ocurredOn).toBeDefined();
+
+        done();
+
     });
 
     /*

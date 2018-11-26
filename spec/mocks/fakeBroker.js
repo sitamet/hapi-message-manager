@@ -3,10 +3,11 @@
 module.exports = {
 
     // lets build a fake rascal publish:
-    publish: (publisher, message, event, callback) => {
+    publishAsync: (publisher, message, event) => new Promise(resolve => {
 
         let publication = {
-            on: function(event, callback) {
+            on: function (event, callback) {
+
                 if (event === 'success') {
                     callback();
                 }
@@ -14,7 +15,6 @@ module.exports = {
             }
         };
 
-        callback(null, publication);
-    }
-
+        resolve(publication);
+    })
 };

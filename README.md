@@ -86,6 +86,16 @@ server.plugins.rascal.events.subscribeThisProcessor(processMessage, 'entity-prod
 
 ```javascript
 server.plugins.rascal.events.publish({ 'foo': 'bar' }, 'test-domain.foo.cmd.update-foo');
+
+# now you can await for its delivery:
+
+try {
+    await server.plugins.rascal.events.publish({ 'foo': 'bar' }, 'test-domain.foo.cmd.update-foo');
+}
+catch(err) {
+    server.log('error', err);
+}
+
 ```
 
 
@@ -104,10 +114,10 @@ switch (routing.keyBare()) {
         // and if there is an err the 'object-type-a.error.do-something'
         doSomething(content.objectTypeA.id).exec(routing.reply.bind(routing));
         break;
-        
+
     case 'object-type-b.cmd.update-b':
 
-        // once updateB calls back, routing sets new content if no err 
+        // once updateB calls back, routing sets new content if no err
         // and reply emits a done with key object-type-b.event.update-b-done or
         // object-type-b.errir.update-b if the updateB fails
         updateB(content.objectTypeB, (err, objectTypeB) => {
