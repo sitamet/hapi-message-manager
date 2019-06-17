@@ -87,7 +87,7 @@ server.plugins.rascal.events.subscribeThisProcessor(processMessage, 'entity-prod
 ```javascript
 server.plugins.rascal.events.publish({ 'foo': 'bar' }, 'test-domain.foo.cmd.update-foo');
 
-# now you can await for its delivery:
+// now you can await for its delivery:
 
 try {
     await server.plugins.rascal.events.publish({ 'foo': 'bar' }, 'test-domain.foo.cmd.update-foo');
