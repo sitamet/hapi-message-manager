@@ -1,6 +1,6 @@
 {
   "name": "hapi-message-manager",
-  "version": "2.0.2",
+  "version": "2.0.3",
   "description": "A hapi-rascal driver for message management with keys based on the structure 'dom.obj.act.det'",
   "main": "lib/index.js",
   "repository": {
@@ -24,11 +24,11 @@
   },
   "homepage": "https://github.com/sitamet/hapi-message-manager",
   "dependencies": {
-    "hapi-rascal": "^3.0.3",
-    "lodash": "^4.17.14"
+    "hapi-rascal": "^3.0.4",
+    "lodash": "^4.17.15"
   },
   "devDependencies": {
-    "jasmine": "^3.4.0"
+    "jasmine": "^3.5.0"
   },
   "engines": {
     "node": ">=8.11.3"
