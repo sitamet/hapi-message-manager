@@ -24,7 +24,7 @@
   },
   "homepage": "https://github.com/sitamet/hapi-message-manager",
   "dependencies": {
-    "hapi-rascal": "^3.0.4",
+    "hapi-rascal": "^4.0.2",
     "lodash": "^4.17.15"
   },
   "devDependencies": {
