@@ -2,8 +2,8 @@
 
 module.exports = {
 
-    // lets build a fake rascal publish:
-    publishAsync: (publisher, message, event) => new Promise(resolve => {
+    // let's build a fake rascal publish:
+    publish: (publisher, message, event) => new Promise(resolve => {
 
         let publication = {
             on: function (event, callback) {
